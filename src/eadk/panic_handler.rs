@@ -3,7 +3,7 @@ use core::panic::PanicInfo;
 #[cfg(target_os = "none")]
 use alloc::string::String;
 
-use crate::eadk::display::{Color565, ScreenPoint, draw_string};
+use crate::eadk::display::{Color565, ScreenPoint, draw_string, push_rect_uniform, ScreenRect};
 
 #[cfg(target_os = "none")]
 fn write_wrapped(text: &str, limit: usize) {
@@ -35,8 +35,8 @@ fn write_wrapped(text: &str, limit: usize) {
 fn panic(panic: &PanicInfo<'_>) -> ! {
     use alloc::format;
 
-    display::push_rect_uniform(
-        Rect {
+    push_rect_uniform(
+        ScreenRect {
             x: 0,
             y: 0,
             width: 320,
@@ -48,6 +48,6 @@ fn panic(panic: &PanicInfo<'_>) -> ! {
     write_wrapped(format!("{}", panic).as_str(), 42);
 
     loop {
-        timing::msleep(50);
+        crate::eadk::time::wait_milliseconds(50);
     }
 }

@@ -158,7 +158,7 @@ impl Key {
 }
 
 #[derive(Clone, Copy, Debug)]
-struct KeyboardState(u64);
+pub struct KeyboardState(u64);
 
 impl KeyboardState {
     pub fn scan() -> Self {

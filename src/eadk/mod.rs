@@ -5,3 +5,6 @@ pub mod time;
 pub mod random;
 pub mod keyboard;
 pub mod panic_handler;
+pub mod adresses;
+#[macro_use]
+pub mod macros;
