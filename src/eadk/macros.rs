@@ -1,22 +1,5 @@
 macro_rules! configure_app {
-    ($app_name: expr, $app_name_size: expr, $icon_path: expr) => {
-        #[allow(unused_imports)]
-        #[cfg(target_os = "none")]
-        use cortex_m;
-
-        #[cfg(target_os = "none")]
-        use eadk::adresses::heap_size;
-        #[cfg(target_os = "none")]
-        use embedded_alloc::LlffHeap as Heap;
-        use crate::eadk::adresses::HEAP_START;
-
-        #[global_allocator]
-        #[cfg(target_os = "none")]
-        static HEAP: Heap = Heap::empty();
-
-        #[cfg(target_os = "none")]
-        extern crate alloc;
-
+    ($app_name: expr, $app_name_size: expr, $icon_path: expr, $icon_size: expr) => {
         #[used]
         #[cfg(target_os = "none")]
         #[unsafe(link_section = ".rodata.eadk_app_name")]
@@ -30,8 +13,28 @@ macro_rules! configure_app {
         #[used]
         #[cfg(target_os = "none")]
         #[unsafe(link_section = ".rodata.eadk_app_icon")]
-        pub static EADK_APP_ICON: [u8; 3437] = *include_bytes!($icon_path);
-
+        pub static EADK_APP_ICON: [u8; $icon_size] = *include_bytes!($icon_path);
     };
 }
 
+macro_rules! setup_allocator {
+    () => {
+        #[allow(unused_imports)]
+        #[cfg(target_os = "none")]
+        use cortex_m;
+
+        #[cfg(target_os = "none")]
+        use eadk::adresses::heap_size;
+        #[cfg(target_os = "none")]
+        use embedded_alloc::LlffHeap as Heap;
+        #[cfg(target_os = "none")]
+        use crate::eadk::adresses::HEAP_START;
+
+        #[global_allocator]
+        #[cfg(target_os = "none")]
+        static HEAP: Heap = Heap::empty();
+
+        #[cfg(target_os = "none")]
+        extern crate alloc;
+    };
+}

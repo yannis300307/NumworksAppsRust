@@ -1,9 +1,10 @@
 #![cfg_attr(target_os = "none", no_std)]
 #![no_main]
-
 #[macro_use]
 mod eadk;
-configure_app!(b"test\0", 5, "../target/icon.nwi");
+
+configure_app!(b"test\0", 5, "../target/icon.nwi", 745);
+setup_allocator!();
 
 #[unsafe(no_mangle)]
 fn main() {
