@@ -8,3 +8,4 @@ pub mod panic_handler;
 pub mod adresses;
 #[macro_use]
 pub mod macros;
+pub mod storage;
