@@ -44,6 +44,8 @@ pub fn file_read(_filename: &str) -> Option<Vec<u8>> {
     None
 }
 
+// TODO: implement read_file_slice
+
 #[cfg(target_os = "none")]
 pub fn file_erase(filename: &str) -> bool {
     let c_string = ffi::CString::new(filename).unwrap();
