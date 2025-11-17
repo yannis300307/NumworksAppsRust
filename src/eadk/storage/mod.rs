@@ -47,6 +47,28 @@ pub fn file_read(_filename: &str) -> Option<Vec<u8>> {
 // TODO: implement read_file_slice
 
 #[cfg(target_os = "none")]
+pub fn read_file_slice(filename: &str, start: usize, mut slice_lenght: usize) -> Option<Vec<u8>> {
+    let c_string = ffi::CString::new(filename).unwrap();
+    let mut lenght: usize = 0;
+    let array_pointer = unsafe { extapp_fileRead(c_string.as_ptr().offset(slice_lenght as isize), &mut lenght as *mut usize) };
+
+    if array_pointer.is_null() {
+        return None;
+    }
+
+    if lenght < slice_lenght {
+        slice_lenght = lenght;
+    }
+
+    Some(unsafe { core::slice::from_raw_parts(array_pointer, slice_lenght).to_vec() })
+}
+
+#[cfg(not(target_os = "none"))]
+pub fn read_file_slice(_filename: &str, _start: usize, _slice_lenght: usize) -> Option<Vec<u8>> {
+    None
+}
+
+#[cfg(target_os = "none")]
 pub fn file_erase(filename: &str) -> bool {
     let c_string = ffi::CString::new(filename).unwrap();
     unsafe { extapp_fileErase(c_string.as_ptr()) }
