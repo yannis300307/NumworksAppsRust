@@ -12,6 +12,8 @@ bench = false
 
 [lib]
 path = "src/main.rs"
+test = false
+doctest = false
 bench = false
 crate-type = ["cdylib"]
 name = "sample_app"
