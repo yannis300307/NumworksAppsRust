@@ -33,7 +33,7 @@ lto = true
 codegen-units = 1
 
 [dependencies]
-cortex-m = "0.7.7"
+cortex-m = {version = "0.7.7", features=["critical-section-single-core"]}
 embedded-alloc = "0.6.0"
 enum-iterator = "2.3.0"
 
