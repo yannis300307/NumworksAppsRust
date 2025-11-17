@@ -5,18 +5,16 @@ mod eadk;
 
 use crate::eadk::utils::wait_ok_released;
 
+// The app name must be a C string and the app name size must include the end line NULL character
 configure_app!(b"test\0", 5, "../target/icon.nwi", 745);
+
+// Setup the heap allocator if you need one
 setup_allocator!();
 
 #[unsafe(no_mangle)]
 fn main() {
-    // Init the heap
-    #[cfg(target_os = "none")]
-    {
-        let heap_size: usize = heap_size();
-        unsafe { HEAP.init(HEAP_START as usize, heap_size) }
-    }
-
+    // You must call setup_allocator!() before
+    init_heap!(); 
     wait_ok_released();
 
     // Your code here

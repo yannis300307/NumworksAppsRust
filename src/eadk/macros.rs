@@ -24,11 +24,11 @@ macro_rules! setup_allocator {
         use cortex_m;
 
         #[cfg(target_os = "none")]
+        use crate::eadk::adresses::HEAP_START;
+        #[cfg(target_os = "none")]
         use eadk::adresses::heap_size;
         #[cfg(target_os = "none")]
         use embedded_alloc::LlffHeap as Heap;
-        #[cfg(target_os = "none")]
-        use crate::eadk::adresses::HEAP_START;
 
         #[global_allocator]
         #[cfg(target_os = "none")]
@@ -36,5 +36,15 @@ macro_rules! setup_allocator {
 
         #[cfg(target_os = "none")]
         extern crate alloc;
+    };
+}
+
+macro_rules! init_heap {
+    () => {
+        #[cfg(target_os = "none")]
+        {
+            let heap_size: usize = heap_size();
+            unsafe { HEAP.init(HEAP_START as usize, heap_size) }
+        }
     };
 }
