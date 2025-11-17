@@ -9,10 +9,19 @@ echo " - Other packages from apt repositories (see code for more info)"
 echo " - Lz4, pypng and stringcase"
 echo " - The Epsilon simulator"
 echo "By using this installer, you agree with all the licenses associated with these softwares."
+echo
+echo "THIS SCRIPT ONLY WORKS ON DEBIAN BASED LINUX DISTROS!"
+echo
 read -p "Do you want to continue ? (y/N) " -r
 
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     echo "Installation aborted."
+    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
+fi
+
+apt --version
+if [ $? -ne 0 ]; then
+    echo "Cannot reach the apt cli. Are you on a Debian based Linux distro? Installation aborted."
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
 
@@ -127,5 +136,7 @@ echo
 echo "================================="
 echo "|  Installation finished! Yay!  |"
 echo "================================="
+echo
+echo "Run \`. ~/.bashrc\` or reopen your terminal to load the newly added commands."
 echo
 echo "Type \`just --list\` to see the available commands."
