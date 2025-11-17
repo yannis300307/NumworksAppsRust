@@ -48,3 +48,10 @@ macro_rules! init_heap {
         }
     };
 }
+
+macro_rules! calc_use {
+    ($crate_name: path) => {
+        #[cfg(target_os = "none")]
+        use $crate_name;
+    };
+}

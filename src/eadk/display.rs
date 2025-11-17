@@ -1,5 +1,5 @@
-#[cfg(target_os = "none")]
-use alloc::{ffi::CString, vec::Vec};
+calc_use!(alloc::ffi::CString);
+calc_use!(alloc::vec::Vec);
 
 #[cfg(not(target_os = "none"))]
 use std::ffi::CString;

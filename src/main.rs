@@ -18,4 +18,7 @@ fn main() {
     wait_ok_released();
 
     // Your code here
+    eadk::storage::file_write("test.aaa", "Test".as_bytes());
+
+    
 }
