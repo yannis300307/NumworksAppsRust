@@ -6,6 +6,7 @@ calc_use!(alloc::vec::Vec);
 #[cfg(not(target_os = "none"))]
 use std::fs;
 
+/// Write a binary file to the records.
 pub fn file_write(filename: &str, content: &[u8]) -> Option<()> {
     #[cfg(target_os = "none")]
     {
@@ -23,6 +24,7 @@ pub fn file_write(filename: &str, content: &[u8]) -> Option<()> {
     }
 }
 
+/// Check if a file is preset in the records. On real hardware, it is possible to have multiple files with the same name.
 pub fn file_exists(filename: &str) -> bool {
     #[cfg(target_os = "none")]
     {
@@ -35,6 +37,7 @@ pub fn file_exists(filename: &str) -> bool {
     }
 }
 
+/// Read a file and return its content. Needs an allocator to function properly.
 pub fn file_read(filename: &str) -> Option<Vec<u8>> {
     #[cfg(target_os = "none")]
     {
@@ -55,6 +58,7 @@ pub fn file_read(filename: &str) -> Option<Vec<u8>> {
     }
 }
 
+/// Read a part of a file. Needs an allocator to function properly.
 pub fn read_file_slice(filename: &str, start: usize, mut slice_lenght: usize) -> Option<Vec<u8>> {
     #[cfg(target_os = "none")]
     {
@@ -85,6 +89,7 @@ pub fn read_file_slice(filename: &str, start: usize, mut slice_lenght: usize) ->
     }
 }
 
+/// Remove a file from the records if it exists.
 pub fn file_erase(filename: &str) -> Option<()> {
     #[cfg(target_os = "none")]
     {
@@ -98,6 +103,7 @@ pub fn file_erase(filename: &str) -> Option<()> {
     }
 }
 
+/// Return an array containing the name of all the records.
 pub fn file_list_with_extension(max_records: usize, extension: &str) -> Vec<String> {
     #[cfg(target_os = "none")]
     {
@@ -147,6 +153,7 @@ pub enum CalculatorModel {
     Simulator,
 }
 
+/// Return the model name of the calculator or Simulator on the Simulator.
 pub fn get_calculator_model() -> CalculatorModel {
     #[cfg(target_os = "none")]
     {

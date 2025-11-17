@@ -20,6 +20,7 @@ pub const COLOR_RED: Color565 = Color565::from_rgb888(255, 0, 0);
 pub const COLOR_GREEN: Color565 = Color565::from_rgb888(0, 255, 0);
 pub const COLOR_BLUE: Color565 = Color565::from_rgb888(0, 0, 255);
 
+/// The color format of the screen. Encoded with 16 bits (or 2 bytes). 5 bits are used for red, 6 for green and 5 for blue.
 #[repr(C)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Color565 {
@@ -27,6 +28,7 @@ pub struct Color565 {
 }
 
 impl Color565 {
+    /// Create a new Color565 object using the RGB values. The components must be valid RGB 565 values.
     #[inline]
     pub const fn new(r: u16, g: u16, b: u16) -> Self {
         Color565 {
@@ -34,12 +36,16 @@ impl Color565 {
         }
     }
 
+    /// Convert a RGB 888 (standard rgb) to RGB 565.
+    #[inline]
     pub const fn from_rgb888(r: u16, g: u16, b: u16) -> Color565 {
         Color565 {
             value: ((r & 0b11111000) << 8) | ((g & 0b11111100) << 3) | (b >> 3),
         }
     }
 
+    /// Extract the red, green and blue components from the RGB 565 color.
+    #[inline]
     pub const fn get_components(&self) -> (u16, u16, u16) {
         let r = self.value >> 0xB;
         let g = (self.value & 0x7E0) >> 5;
@@ -49,6 +55,7 @@ impl Color565 {
     }
 }
 
+/// A rectangle on the screen defined by its top left corner coordinates and its size.
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct ScreenRect {
@@ -69,6 +76,7 @@ impl ScreenRect {
     }
 }
 
+/// A point on the screen defined by its coordinates.
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct ScreenPoint {
@@ -82,6 +90,7 @@ impl ScreenPoint {
     }
 }
 
+/// Fill the screen rect defined by `rect` with the given pixels.
 pub fn push_rect(rect: ScreenRect, pixels: &[Color565]) {
     unsafe {
         eadk_display_push_rect(rect, pixels.as_ptr());
@@ -89,6 +98,7 @@ pub fn push_rect(rect: ScreenRect, pixels: &[Color565]) {
     refresh_simulator();
 }
 
+/// Fetch pixels from the given rect from the screen. The size of the returned vector will be `rect.width * rect.height`
 pub fn pull_rect(rect: ScreenRect) -> Vec<Color565> {
     let size = rect.width as usize * rect.height as usize;
     let mut vec: Vec<Color565> = Vec::with_capacity(size);
@@ -102,6 +112,7 @@ pub fn pull_rect(rect: ScreenRect) -> Vec<Color565> {
     vec
 }
 
+/// Fill the screen rect defined by `rect` with the given color.
 pub fn push_rect_uniform(rect: ScreenRect, color: Color565) {
     unsafe {
         eadk_display_push_rect_uniform(rect, color);
@@ -109,12 +120,14 @@ pub fn push_rect_uniform(rect: ScreenRect, color: Color565) {
     refresh_simulator();
 }
 
+/// Wait until the screen is refreshed. The maximum FPS is 40 on actual hardware.
 pub fn wait_for_vblank() {
     unsafe {
         eadk_display_wait_for_vblank();
     }
 }
 
+/// Draw a string to the screen.
 pub fn draw_string(
     text: &str,
     point: ScreenPoint,

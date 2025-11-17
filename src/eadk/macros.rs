@@ -49,9 +49,18 @@ macro_rules! init_heap {
     };
 }
 
+/// Conditional import. Only import the crate if the target is the calculator.
 macro_rules! calc_use {
     ($crate_name: path) => {
         #[cfg(target_os = "none")]
+        use $crate_name;
+    };
+}
+
+/// Conditional import. Only import the crate if the target is the simulator.
+macro_rules! sim_use {
+    ($crate_name: path) => {
+        #[cfg(not(target_os = "none"))]
         use $crate_name;
     };
 }
