@@ -11,7 +11,7 @@ use std::fs;
 pub fn file_write(filename: &str, content: &[u8]) -> Option<()> {
     let c_string = ffi::CString::new(filename).unwrap();
     let result = unsafe { extapp_fileWrite(c_string.as_ptr(), content.as_ptr(), content.len()) };
-    if result {Some(())} else {None}
+    if result { Some(()) } else { None }
 }
 
 #[cfg(not(target_os = "none"))]
@@ -55,7 +55,12 @@ pub fn file_read(filename: &str) -> Option<Vec<u8>> {
 pub fn read_file_slice(filename: &str, start: usize, mut slice_lenght: usize) -> Option<Vec<u8>> {
     let c_string = ffi::CString::new(filename).unwrap();
     let mut lenght: usize = 0;
-    let array_pointer = unsafe { extapp_fileRead(c_string.as_ptr().offset(slice_lenght as isize), &mut lenght as *mut usize) };
+    let array_pointer = unsafe {
+        extapp_fileRead(
+            c_string.as_ptr().offset(slice_lenght as isize),
+            &mut lenght as *mut usize,
+        )
+    };
 
     if array_pointer.is_null() {
         return None;
@@ -70,14 +75,16 @@ pub fn read_file_slice(filename: &str, start: usize, mut slice_lenght: usize) ->
 
 #[cfg(not(target_os = "none"))]
 pub fn read_file_slice(filename: &str, start: usize, slice_lenght: usize) -> Option<Vec<u8>> {
-    fs::read(format!("simulator/storage/{}", filename)).map(|v| v[start..(start + slice_lenght)].to_vec()).ok()
+    fs::read(format!("simulator/storage/{}", filename))
+        .map(|v| v[start..(start + slice_lenght)].to_vec())
+        .ok()
 }
 
 #[cfg(target_os = "none")]
 pub fn file_erase(filename: &str) -> Option<()> {
     let c_string = ffi::CString::new(filename).unwrap();
     let result = unsafe { extapp_fileErase(c_string.as_ptr()) };
-    if result {Some(())} else {None}
+    if result { Some(()) } else { None }
 }
 
 #[cfg(not(target_os = "none"))]
@@ -111,8 +118,19 @@ pub fn file_list_with_extension(max_records: usize, extension: &str) -> Vec<Stri
 }
 
 #[cfg(not(target_os = "none"))]
-pub fn file_list_with_extension(_max_records: usize, _extension: &str) -> Vec<String> {
-    Vec::new()
+pub fn file_list_with_extension(max_records: usize, extension: &str) -> Vec<String> {
+    let mut files: Vec<String> = Vec::new();
+    for entry in fs::read_dir("simulator/storage").unwrap() {
+        if files.len() > max_records {
+            let entry = entry.unwrap();
+            let name = entry.file_name().into_string().unwrap();
+            if name.ends_with(extension) {
+                files.push(name);
+            }
+        }
+    }
+
+    files
 }
 
 pub enum CalculatorModel {
