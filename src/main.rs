@@ -6,7 +6,7 @@ mod eadk;
 use crate::eadk::utils::wait_ok_released;
 
 // The app name must be a C string and the app name size must include the end line NULL character
-configure_app!(b"test\0", 5, "../target/icon.nwi", 745);
+configure_app!(b"SampleApp\0", 10, "../target/icon.nwi", 745);
 
 // Setup the heap allocator if you need one
 setup_allocator!();
@@ -18,7 +18,4 @@ fn main() {
     wait_ok_released();
 
     // Your code here
-    eadk::storage::file_write("test.aaa", "Test".as_bytes());
-
-    
 }
