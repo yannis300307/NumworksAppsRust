@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "This setup script will automatically install all the dependencies for this template. It will install, if not installed:"
 echo " - Rustup"
 echo " - Cargo"
@@ -19,7 +21,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
 
-apt --version
+which apt
 if [ $? -ne 0 ]; then
     echo "Cannot reach the apt cli. Are you on a Debian based Linux distro? Installation aborted."
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
@@ -32,7 +34,7 @@ if [ $? -ne 0 ]; then
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
 
-arm-none-eabi-gcc --version
+which arm-none-eabi-gcc
 if [ $? -ne 0 ]; then
     echo "Installing gcc toolchain"
     sudo apt install gcc-arm-none-eabi binutils-arm-none-eabi -y
@@ -65,10 +67,10 @@ if [ $? -ne 0 ]; then
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
 
-cargo --version
+which cargo
 if [ $? -ne 0 ]; then
     echo "Cargo not installed. Checking for Rustup."
-    rustup --version
+    which rustup
     if [ $? -ne 0 ]; then
         echo "Rustup not installed. Downloading Rustup"
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -81,24 +83,24 @@ if [ $? -ne 0 ]; then
             [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
         fi
     fi
-    cargo --version
+    which cargo
     if [ $? -ne 0 ]; then
         echo "Cargo installation failed. Please retry or install cargo manually. Installation aborted."
         [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
     fi
 fi
 
-npx --version
+which npx
 if [ $? -ne 0 ]; then
     echo "Npx is not installed. Checking for NVM."
-    nvm --version
+    which nvm
     if [ $? -ne 0 ]; then
         echo "NVM is not installed. Downloading NVM"
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
         [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-        nvm --version
+        which nvm
         if [ $? -ne 0 ]; then
             echo "NVM installation failed. Please retry or install NVM manually. Installation aborted."
             [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
@@ -109,7 +111,7 @@ if [ $? -ne 0 ]; then
         echo "Node installation failed. Please retry or install Node manually. Installation aborted."
         [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
     fi
-    npx --version
+    which npx
     if [ $? -ne 0 ]; then
         echo "Npx installation failed. Please retry or install Npx manually. Installation aborted."
         [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
@@ -126,7 +128,7 @@ if [ $? -ne 0 ]; then
     echo "Just installation failed. Please retry or install Just manually. Installation aborted."
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
-npm install -g nwlink
+npm install nwlink
 if [ $? -ne 0 ]; then
     echo "Nwlink installation failed. Please retry or install Nwlink manually. Installation aborted."
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
