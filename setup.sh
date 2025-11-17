@@ -135,9 +135,9 @@ if [ $? -ne 0 ]; then
 fi
 
 echo
-echo "================================="
-echo "|  Installation finished! Yay!  |"
-echo "================================="
+echo "=================================="
+echo "|  Installation finished! Nice!  |"
+echo "=================================="
 echo
 echo "Run \`. ~/.bashrc\` or reopen your terminal to load the newly added commands."
 echo
