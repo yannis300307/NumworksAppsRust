@@ -7,6 +7,7 @@ echo " - The Numworks sdk including arm-none-eabi-gcc"
 echo " - NVM and Node js"
 echo " - Other packages from apt repositories (see code for more info)"
 echo " - Lz4, pypng and stringcase"
+echo " - The Epsilon simulator"
 echo "By using this installer, you agree with all the licenses associated with these softwares."
 read -p "Do you want to continue ? (y/N) " -r
 
@@ -16,13 +17,26 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 sudo apt update
-sudo apt install build-essential git imagemagick libx11-dev libxext-dev libfreetype6-dev libpng-dev libjpeg-dev pkg-config python3 python3-pip python3-venv curl libatomic1 gcc-arm-none-eabi binutils-arm-none-eabi -y
+sudo apt install build-essential git imagemagick libx11-dev libxext-dev libfreetype6-dev libpng-dev libjpeg-dev pkg-config python3 python3-pip python3-venv curl libatomic1 -y
 if [ $? -ne 0 ]; then
     echo "The installation of the dependency packages has failed. Perhaps sudo is not installed? Installation aborted."
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
 
-mkdir -p simulator
+arm-none-eabi-gcc --version
+if [ $? -ne 0 ]; then
+    echo "Installing gcc toolchain"
+    sudo apt install gcc-arm-none-eabi binutils-arm-none-eabi -y
+fi
+
+if [ ! -d "simulator" ]; then
+    echo "Clonning Epsilon."
+    git clone https://github.com/numworks/epsilon.git simulator -b version-20
+    if [ $? -ne 0 ]; then
+        echo "Cannot clone the Epsilon repository. Installation aborted."
+        [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
+    fi
+fi
 
 python3 -m venv ./simulator/venv
 if [ $? -ne 0 ]; then
@@ -114,4 +128,4 @@ echo "================================="
 echo "|  Installation finished! Yay!  |"
 echo "================================="
 echo
-echo "Type `just --list` to see the available commands."
+echo "Type \`just --list\` to see the available commands."

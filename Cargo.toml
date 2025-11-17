@@ -3,6 +3,33 @@ name = "Rust-epsilon-dev-template"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "SampleApp"
+path = "src/main.rs"
+test = false
+doctest = false
+bench = false
+
+[lib]
+path = "src/main.rs"
+bench = false
+crate-type = ["cdylib"]
+name = "sample_app"
+
+[profile.dev]
+panic="abort"
+strip=true
+opt-level= "z"
+lto = true
+codegen-units = 1
+
+[profile.release]
+panic="abort"
+strip = true
+opt-level = 3
+lto = true
+codegen-units = 1
+
 [dependencies]
 cortex-m = "0.7.7"
 embedded-alloc = "0.6.0"
