@@ -4,15 +4,22 @@ use core::ffi::CStr;
 #[cfg(target_os = "none")]
 use alloc::{ffi, string::String, vec::Vec};
 
+#[cfg(not(target_os = "none"))]
+use std::fs;
+
 #[cfg(target_os = "none")]
-pub fn file_write(filename: &str, content: &[u8]) -> bool {
+pub fn file_write(filename: &str, content: &[u8]) -> Option<()> {
     let c_string = ffi::CString::new(filename).unwrap();
-    unsafe { extapp_fileWrite(c_string.as_ptr(), content.as_ptr(), content.len()) }
+    let result = unsafe { extapp_fileWrite(c_string.as_ptr(), content.as_ptr(), content.len()) };
+    if result {Some(())} else {None}
 }
 
 #[cfg(not(target_os = "none"))]
-pub fn file_write(_filename: &str, _content: &[u8]) -> bool {
-    true
+pub fn file_write(filename: &str, content: &[u8]) -> Option<()> {
+    if !fs::exists("simulator/storage").ok()? {
+        fs::create_dir_all("simulator/storage").ok()?;
+    }
+    fs::write(format!("simulator/storage/{}", filename), content).ok()
 }
 
 #[cfg(target_os = "none")]
@@ -22,8 +29,8 @@ pub fn file_exists(filename: &str) -> bool {
 }
 
 #[cfg(not(target_os = "none"))]
-pub fn file_exists(_filename: &str) -> bool {
-    false
+pub fn file_exists(filename: &str) -> bool {
+    fs::exists(format!("simulator/storage/{}", filename)).unwrap()
 }
 
 #[cfg(target_os = "none")]
@@ -40,11 +47,9 @@ pub fn file_read(filename: &str) -> Option<Vec<u8>> {
 }
 
 #[cfg(not(target_os = "none"))]
-pub fn file_read(_filename: &str) -> Option<Vec<u8>> {
-    None
+pub fn file_read(filename: &str) -> Option<Vec<u8>> {
+    fs::read(format!("simulator/storage/{}", filename)).ok()
 }
-
-// TODO: implement read_file_slice
 
 #[cfg(target_os = "none")]
 pub fn read_file_slice(filename: &str, start: usize, mut slice_lenght: usize) -> Option<Vec<u8>> {
@@ -64,19 +69,20 @@ pub fn read_file_slice(filename: &str, start: usize, mut slice_lenght: usize) ->
 }
 
 #[cfg(not(target_os = "none"))]
-pub fn read_file_slice(_filename: &str, _start: usize, _slice_lenght: usize) -> Option<Vec<u8>> {
-    None
+pub fn read_file_slice(filename: &str, start: usize, slice_lenght: usize) -> Option<Vec<u8>> {
+    fs::read(format!("simulator/storage/{}", filename)).map(|v| v[start..(start + slice_lenght)].to_vec()).ok()
 }
 
 #[cfg(target_os = "none")]
-pub fn file_erase(filename: &str) -> bool {
+pub fn file_erase(filename: &str) -> Option<()> {
     let c_string = ffi::CString::new(filename).unwrap();
-    unsafe { extapp_fileErase(c_string.as_ptr()) }
+    let result = unsafe { extapp_fileErase(c_string.as_ptr()) };
+    if result {Some(())} else {None}
 }
 
 #[cfg(not(target_os = "none"))]
-pub fn extapp_file_erase(_filename: &str) -> bool {
-    true
+pub fn extapp_file_erase(filename: &str) -> Option<()> {
+    fs::remove_file(format!("simulator/storage/{}", filename)).ok()
 }
 
 #[cfg(target_os = "none")]
