@@ -3,6 +3,8 @@
 #[macro_use]
 mod eadk;
 
+use crate::eadk::utils::wait_ok_released;
+
 configure_app!(b"test\0", 5, "../target/icon.nwi", 745);
 setup_allocator!();
 
@@ -15,10 +17,7 @@ fn main() {
         unsafe { HEAP.init(HEAP_START as usize, heap_size) }
     }
 
-    // Avoid instant click on Ok
-    while eadk::keyboard::KeyboardState::scan().key_down(eadk::keyboard::Key::Ok) {
-        eadk::time::wait_milliseconds(50);
-    }
+    wait_ok_released();
 
     // Your code here
 }
