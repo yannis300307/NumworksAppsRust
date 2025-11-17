@@ -1,12 +1,20 @@
+#[cfg(target_os = "none")]
 pub fn wait_microseconds(delay: u32) {
     unsafe {
         eadk_timing_usleep(delay);
     }
 }
 
+#[cfg(not(target_os = "none"))]
+pub fn wait_microseconds(delay: u32) {
+    unsafe {
+        eadk_timing_msleep(delay / 1000);
+    }
+}
+
 pub fn wait_seconds(delay: f32) {
     unsafe {
-        eadk_timing_usleep((delay * 1000000.) as u32);
+        eadk_timing_msleep((delay * 1000.) as u32);
     }
 }
 
