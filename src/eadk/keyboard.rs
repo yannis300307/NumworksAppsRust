@@ -1,5 +1,7 @@
 use enum_iterator::Sequence;
 
+use crate::eadk::time;
+
 #[derive(Clone, Copy, PartialEq, Eq, Sequence, Debug)]
 #[repr(u8)]
 pub enum Key {
@@ -231,6 +233,16 @@ impl InputManager {
 
     pub fn is_keydown(&self, key: Key) -> bool {
         self.keyboard_state.key_down(key)
+    }
+}
+
+pub fn wait_until_pressed(key: Key) {
+    loop {
+        let scan = KeyboardState::scan();
+        if scan.key_down(key) {
+            break;
+        }
+        time::wait_milliseconds(50);
     }
 }
 

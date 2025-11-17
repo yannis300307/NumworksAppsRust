@@ -18,4 +18,7 @@ fn main() {
     wait_ok_released();
 
     // Your code here
+
+    crate::eadk::utils::log(&["Hello, World!"]);
+    crate::eadk::keyboard::wait_until_pressed(eadk::keyboard::Key::Ok);
 }
