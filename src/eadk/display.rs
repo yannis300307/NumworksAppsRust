@@ -6,6 +6,8 @@ use std::ffi::CString;
 
 use core::ffi::c_char;
 
+use crate::eadk::utils::refresh_simulator;
+
 pub const SCREEN_RECT: ScreenRect = ScreenRect {
     x: 0,
     y: 0,
@@ -56,6 +58,17 @@ pub struct ScreenRect {
     pub height: u16,
 }
 
+impl ScreenRect {
+    pub fn new(x: u16, y: u16, width: u16, height: u16) -> Self {
+        ScreenRect {
+            x,
+            y,
+            width,
+            height,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct ScreenPoint {
@@ -63,10 +76,17 @@ pub struct ScreenPoint {
     pub y: u16,
 }
 
+impl ScreenPoint {
+    pub fn new(x: u16, y: u16) -> Self {
+        ScreenPoint { x, y }
+    }
+}
+
 pub fn push_rect(rect: ScreenRect, pixels: &[Color565]) {
     unsafe {
         eadk_display_push_rect(rect, pixels.as_ptr());
     }
+    refresh_simulator();
 }
 
 pub fn pull_rect(rect: ScreenRect) -> Vec<Color565> {
@@ -86,6 +106,7 @@ pub fn push_rect_uniform(rect: ScreenRect, color: Color565) {
     unsafe {
         eadk_display_push_rect_uniform(rect, color);
     }
+    refresh_simulator();
 }
 
 pub fn wait_for_vblank() {
@@ -111,6 +132,7 @@ pub fn draw_string(
             background_color,
         )
     }
+    refresh_simulator();
     Some(())
 }
 
