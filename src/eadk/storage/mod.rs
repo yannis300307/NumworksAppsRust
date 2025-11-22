@@ -133,7 +133,7 @@ pub fn file_list_with_extension(max_records: usize, extension: &str) -> Vec<Stri
     {
         let mut files: Vec<String> = Vec::new();
         for entry in fs::read_dir("simulator/storage").unwrap() {
-            if files.len() > max_records {
+            if files.len() < max_records {
                 let entry = entry.unwrap();
                 let name = entry.file_name().into_string().unwrap();
                 if name.ends_with(extension) {
