@@ -59,7 +59,7 @@ pub fn file_read(filename: &str) -> Option<Vec<u8>> {
 }
 
 /// Read a part of a file. Needs an allocator to function properly.
-pub fn read_file_slice(filename: &str, start: usize, mut slice_lenght: usize) -> Option<Vec<u8>> {
+pub fn file_read_slice(filename: &str, start: usize, mut slice_lenght: usize) -> Option<Vec<u8>> {
     #[cfg(target_os = "none")]
     {
         let c_string = ffi::CString::new(filename).unwrap();
