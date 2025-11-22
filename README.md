@@ -6,6 +6,10 @@ With this new product, the only limit is your imagination!
 
 With the incredible name of NumworksAppsRust, our product has a lot more features than the old numworks-sample-app-rust with up to date dependencies.
 
+# Current state
+
+NumworksAppsRust is not production ready yet. It's currently in test with Numcraft.
+
 # Why NumworksAppsRust is one of the most feature complete template for Numworks programming?
 
 Our new product features:
