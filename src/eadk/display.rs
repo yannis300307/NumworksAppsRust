@@ -6,8 +6,6 @@ use std::ffi::CString;
 
 use core::ffi::c_char;
 
-use crate::eadk::utils::refresh_simulator;
-
 pub const SCREEN_RECT: ScreenRect = ScreenRect {
     x: 0,
     y: 0,
@@ -95,7 +93,6 @@ pub fn push_rect(rect: ScreenRect, pixels: &[Color565]) {
     unsafe {
         eadk_display_push_rect(rect, pixels.as_ptr());
     }
-    refresh_simulator();
 }
 
 /// Fetch pixels from the given rect from the screen. The size of the returned vector will be `rect.width * rect.height`
@@ -117,10 +114,9 @@ pub fn push_rect_uniform(rect: ScreenRect, color: Color565) {
     unsafe {
         eadk_display_push_rect_uniform(rect, color);
     }
-    refresh_simulator();
 }
 
-/// Wait until the screen is refreshed. The maximum FPS is 40 on actual hardware.
+/// Wait until the screen is ed. The maximum FPS is 40 on actual hardware.
 pub fn wait_for_vblank() {
     unsafe {
         eadk_display_wait_for_vblank();
@@ -145,7 +141,6 @@ pub fn draw_string(
             background_color,
         )
     }
-    refresh_simulator();
     Some(())
 }
 
