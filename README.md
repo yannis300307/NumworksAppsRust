@@ -6,10 +6,6 @@ With this new product, the only limit is your imagination!
 
 With the incredible name of NumworksAppsRust, our product has a lot more features than the old numworks-sample-app-rust with up to date dependencies.
 
-# Current state
-
-NumworksAppsRust is not production ready yet. It's currently in test with Numcraft.
-
 # Why NumworksAppsRust is one of the most feature complete template for Numworks programming?
 
 Our new product features:
@@ -51,6 +47,11 @@ NumworksAppsRust is inspired from the original numworks-sample-app-rust so it ai
 We also used [storage.c by Yaya.cout](https://framagit.org/Yaya.Cout/numworks-extapp-storage) to access the storage of the calculator.
 
 We reused a lot of features and code from [Yannis's NumcraftRust project](https://github.com/yannis300307/NumcraftRust) such has the simulator support or the allocator.
+
+
+# Current state
+
+NumworksAppsRust has been implemented in Numcraft and all the encountered bugs have been fixed. The template is not warranty to be 100 % bug free but is mostly usable. If you encounter an issue, please open an issue on the Github repository.
 
 # How to contact us?
 
