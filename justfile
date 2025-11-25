@@ -23,7 +23,7 @@ run_nwb:
 
 sim jobs="1" features="":
     if [ ! -f "./simulator/output/release/simulator/linux/epsilon.bin" ]; then \
-        cd simulator && . ./venv/bin/activate && make PLATFORM=simulator -j {{jobs}}; \
+        cd simulator && . ./.venv/bin/activate && make PLATFORM=simulator -j {{jobs}}; \
     fi
 
     if [ -n "{{features}}"];then \
