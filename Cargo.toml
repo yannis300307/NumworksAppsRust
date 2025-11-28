@@ -18,6 +18,11 @@ bench = false
 crate-type = ["cdylib"]
 name = "sample_app"
 
+[features]
+default = ["upsilon"]
+upsilon = []
+epsilon = []
+
 [profile.dev]
 panic="abort"
 strip=true
