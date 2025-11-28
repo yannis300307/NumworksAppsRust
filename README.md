@@ -51,6 +51,8 @@ We reused a lot of features and code from [Yannis's NumcraftRust project](https:
 
 # Current state
 
+The new Upsilon support has not been 100% tested.
+
 NumworksAppsRust has been implemented in Numcraft and all the encountered bugs have been fixed. The template is not warranty to be 100 % bug free but is mostly usable. If you encounter an issue, please open an issue on the Github repository.
 
 # How to contact us?
