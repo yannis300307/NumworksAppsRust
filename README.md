@@ -62,7 +62,7 @@ NumworksAppsRust has been implemented in Numcraft and all the encountered bugs h
 
 ## Need help?
 
-You can ping me at `@yannis300307` on the Omega Community Discord serve https://discord.gg/JpmjSH3.
+You can ping me at `@yannis300307` on the Omega Community Discord server https://discord.gg/JpmjSH3.
 
 ## Licenses
 
