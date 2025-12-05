@@ -2,12 +2,12 @@
 #![no_main]
 
 #[macro_use]
-mod eadk;
+mod nadk;
 
-use crate::eadk::display::{Color565, SCREEN_RECT, ScreenPoint, draw_string, push_rect_uniform};
-use crate::eadk::keyboard::{Key, wait_until_pressed};
-use crate::eadk::storage::{CalculatorModel, get_calculator_model};
-use crate::eadk::utils::wait_ok_released;
+use crate::nadk::display::{Color565, SCREEN_RECT, ScreenPoint, draw_string, push_rect_uniform};
+use crate::nadk::keyboard::{Key, wait_until_pressed};
+use crate::nadk::storage::{CalculatorModel, get_calculator_model};
+use crate::nadk::utils::wait_ok_released;
 
 // The app name must be a C string and the app name size must include the end line NULL character
 configure_app!(b"SampleApp\0", 10, "../target/icon.nwi", 745);
