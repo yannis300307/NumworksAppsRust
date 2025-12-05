@@ -58,3 +58,7 @@ NumworksAppsRust has been implemented in Numcraft and all the encountered bugs h
 # How to contact us?
 
 You can ping us (me, in fact) at `@yannis300307` on the Omega Community Discord serve https://discord.gg/JpmjSH3.
+
+# Licenses
+
+The project is under the MIT License. The files in the build directory are under the MIT license but licensed by Damien Nicolet. (build/build.rs is licensed by me)

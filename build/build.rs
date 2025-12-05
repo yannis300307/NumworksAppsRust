@@ -60,9 +60,8 @@ fn main() {
         println!("cargo:rustc-link-arg=--relocatable");
         println!("cargo:rustc-link-arg=-no-gc-sections");
 
-        // Cargo sets CARGO_FEATURE_<NAME> for enabled features (uppercase).
         if std::env::var("CARGO_FEATURE_UPSILON").is_ok() {
-            println!("cargo:rustc-link-arg=-L../../api");
+            println!("cargo:rustc-link-arg=-Ltarget/upsilon_api");
             println!("cargo:rustc-link-arg=-lapi");
         } else {
             compile_c_libs();
