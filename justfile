@@ -18,7 +18,6 @@ send-upsilon:
     mkdir -p target/upsilon_api
     make -f build/upsilon-api/Makefile
     just build-upsilon
-    just flash-upsilon
     # Code adapted from https://github.com/UpsilonNumworks/Upsilon-External/blob/master/Makefile. Under MIT
     ./build/archive apps.tar {{app_name}}
     echo "Waiting for the calculator to be connected, use the bootloader to flash on Upsilon if your app is bigger than 2MB"
@@ -55,9 +54,8 @@ sim jobs="1":
     cargo build --release --target={{current_target}} --lib --features "epsilon" --no-default-features
     just run_nwb
 
-[confirm("This will clean the built app AND the simulator. Do you want to continue ?")]
+[confirm("This will clean the built app. Do you want to continue ?")]
 clean:
-    cd ./simulator && make clean
     rm -f ./app.elf ./app.icon
     cargo clean
 
