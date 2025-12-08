@@ -28,7 +28,7 @@ def main():
     
     with open(args.input, 'rb') as input_file:
         r = png.Reader(file=input_file)
-        width, height, rows, infos = r.read()
+        width, height, rows, infos = r.asRGBA8()
         
         if width != 55 or height != 56:
             error_exit("Icon must be 55x56 !", 2)
