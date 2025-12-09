@@ -43,7 +43,7 @@ Available justfile commands:
 
 ## Quick documentation
 
-The `src` folder contains a main.rs file and a nadk folder. The nadk folder is rust module that contain the cross platform api.
+The `src` folder contains a main.rs file and a nadk folder. The nadk folder is a rust module that contains the cross platform api.
 
 The `main.rs` file uses 2 macros `setup_allocator!()` and `init_heap!();` in order to init the heap allocator.
 
