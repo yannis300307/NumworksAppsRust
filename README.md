@@ -59,7 +59,7 @@ NumworksAppsRust is inspired from the original numworks-sample-app-rust so it ai
 
 I also used [storage.c by Yaya.cout](https://framagit.org/Yaya.Cout/numworks-extapp-storage) to access the storage of the calculator.
 
-I reused a lot of features and code from [Yannis's NumcraftRust project](https://github.com/yannis300307/NumcraftRust) such has the simulator support or the allocator.
+I reused a lot of features and code from [my NumcraftRust project](https://github.com/yannis300307/NumcraftRust) such has the simulator support or the allocator.
 
 ## Current state
 
