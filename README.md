@@ -50,13 +50,11 @@ If you want to use a crate but only on calculator, for instance `alloc`, import 
 
 NumworksAppsRust is inspired from the original numworks-sample-app-rust so it aims to fit to the original template but no code has been reused, so that's why NumworksAppsRust is under the MIT License.
 
-We also used [storage.c by Yaya.cout](https://framagit.org/Yaya.Cout/numworks-extapp-storage) to access the storage of the calculator.
+I also used [storage.c by Yaya.cout](https://framagit.org/Yaya.Cout/numworks-extapp-storage) to access the storage of the calculator.
 
-We reused a lot of features and code from [Yannis's NumcraftRust project](https://github.com/yannis300307/NumcraftRust) such has the simulator support or the allocator.
+I reused a lot of features and code from [Yannis's NumcraftRust project](https://github.com/yannis300307/NumcraftRust) such has the simulator support or the allocator.
 
 ## Current state
-
-The icons are not supported on Upsilon but I will add that soon.
 
 NumworksAppsRust has been implemented in Numcraft and all the encountered bugs have been fixed. The template is not warranty to be 100 % bug free but is usable. If you encounter an issue, please open an issue on the Github repository.
 
