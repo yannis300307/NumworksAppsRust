@@ -27,12 +27,19 @@ Here is a list of some available features:
 If you are on a Debian based Linux Distro (Debian, Ubuntu, Linux Mint, ...), you simply have to run `bash ./setup.sh` to install all the dependencies (You might have to reopen your terminal to reload the PATH).
 
 And that's it! You should now be able to run `just sim` to see your creation comming to life in the simulator!
+Available justfile commands:
 
-To build your app, run `just build`.
-To send it to your calculator use `just send-epsilon` or `just send-upsilon` depending on your calcualator's firmware.
-To check your rust code for all the targets, run `just check`.
-If you are borred to have a `target` folder of around 42 TB, you can run `just clean-all`.
-If you want to clear all the build cache (including the simulator), run `just clear-all`.
+| Command               | Description                                                                                                                              |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+|`just build-epsilon`   | Build the app for **Epsilon** and create a NWA file that can be imported to the Numworks' [app page](https://my.numworks.com/apps).      |
+|`just build-upsilon`   | Build the app for **Upsilon**.                                                                                                           |
+|`just send-epsilon`    | Build and send the app to the calculator running **Epsilon**.                                                                            |
+|`just send-upsilon`    | Build and send the app to the calculator running **Upsilon**.                                                                            |
+|`just release-upsilon` | Build and make the project ready to be added to the [Upsilon-external](https://github.com/UpsilonNumworks/Upsilon-External/) repository. |
+|`just check`           | Run `cargo check` for every targets and and every firmwares.                                                                             |
+|`just sim [job-count]` | Build the app as a NWB and run the Epsilon simulator. The job count will be added to the cc `-j` argument (default 1).                   |
+|`just clean`           | Clean the build cache for the app and the files used by Upsilon-External.                                                                |
+|`just clear`           | Remove the build cache, the files for Upsilon-External and the simulator.                                                                |
 
 ## Quick documentation
 
