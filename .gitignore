@@ -6,3 +6,4 @@ package.json
 .venv
 *.elf
 *.icon
+/icon.png
