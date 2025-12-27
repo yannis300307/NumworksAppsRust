@@ -9,14 +9,14 @@ build-epsilon:
     cargo build --release --bin {{app_name}} --target=thumbv7em-none-eabihf --features "epsilon" --no-default-features
 
 build-upsilon:
+    mkdir -p target/upsilon_api
+    make -f build/upsilon-api/Makefile
     cargo build --release --bin {{app_name}} --target=thumbv7em-none-eabihf --features "upsilon" --no-default-features
 
 send-epsilon: build-epsilon
     npm exec --yes -- nwlink@0.0.19 install-nwa ./target/thumbv7em-none-eabihf/release/{{app_name}}
 
 send-upsilon:
-    mkdir -p target/upsilon_api
-    make -f build/upsilon-api/Makefile
     just build-upsilon
     # Code adapted from https://github.com/UpsilonNumworks/Upsilon-External/blob/master/Makefile. Under MIT
     ./build/archive apps.tar {{app_name}}
@@ -25,8 +25,6 @@ send-upsilon:
     dfu-util -i 0 -a 0 -s 0x90200000 -D target/apps.tar
 
 release-upsilon:
-    mkdir -p target/upsilon_api
-    make -f build/upsilon-api/Makefile
     just build-upsilon
     . ./.venv/bin/activate && python3 ./build/png2icon.py {{icon_file}} app.icon
     cp ./target/thumbv7em-none-eabihf/release/{{app_name}} ./app.elf
