@@ -39,7 +39,7 @@ fn convert_icon() {
             out
         } else {
             panic!(
-                "Your OS is not supported! If you're using Windows, please compile Numcraft in WSL."
+                "Your OS is not supported! If you're using Windows, please compile the app in WSL."
             );
         }
     };
