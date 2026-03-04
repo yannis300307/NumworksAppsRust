@@ -231,7 +231,7 @@ impl InputManager {
         self.just_pressed = self
             .keyboard_state
             .get_just_pressed(self.last_keyboard_state);
-        self.just_pressed = self
+        self.just_released = self
             .keyboard_state
             .get_just_released(self.last_keyboard_state);
     }
