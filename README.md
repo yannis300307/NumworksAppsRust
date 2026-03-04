@@ -24,7 +24,51 @@ Here is a list of some available features:
 
 ## Setup
 
-If you are on a Debian based Linux Distro (Debian, Ubuntu, Linux Mint, ...), you simply have to run `bash ./setup.sh` to install all the dependencies (You might have to reopen your terminal to reload the PATH).
+First, you need to install the libs and build the dependencies. On Debian based distros, use:
+```bash
+sudo apt update
+sudo apt install build-essential git imagemagick libx11-dev libxext-dev libfreetype6-dev libpng-dev libjpeg-dev pkg-config python3 python3-pip python3-venv curl libatomic1 gcc-arm-none-eabi binutils-arm-none-eabi -y
+```
+
+Next, clone the Epsilon repo with version 20:
+```bash
+git clone https://github.com/numworks/epsilon.git simulator -b version-20
+```
+Then, setup the Python venv:
+```bash
+python3 -m venv ./.venv
+source ./.venv/bin/activate
+pip3 install lz4 pypng stringcase
+```
+
+If Cargo is not installed, install it with:
+```bash
+# This will choose the default install. Feel free to customize your install.
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+. "$HOME/.cargo/env"
+```
+
+Then, you can install nodejs. You can install nodejs from the apt repositories (on Debian):
+```bash
+sudo apt install nodejs npm
+```
+
+But you can also install it using NVM:
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm install node
+```
+
+Next, setup the build targets for the calculator and install the Rust dependencies:
+```bash
+rustup target add thumbv7em-none-eabihf
+cargo install just
+```
+
+If you are on a Debian based Linux Distro (Debian, Ubuntu, Linux Mint, ...), you can run `bash ./setup.sh` to install all the dependencies (You might have to reopen your terminal to reload the PATH). **For an unknown reason, this script can fail on the NVM install. If it happens to you, I suggest you to finish the install manually.**
 
 And that's it! You should now be able to run `just sim` to see your creation comming to life in the simulator!
 Available justfile commands:
@@ -41,7 +85,7 @@ Available justfile commands:
 |`just clean`           | Clean the build cache for the app and the files used by Upsilon-External.                                                                |
 |`just clear`           | Remove the build cache, the files for Upsilon-External and the simulator.                                                                |
 
-## Quick documentation
+## Quick start
 
 The `src` folder contains a main.rs file and a nadk folder. The nadk folder is a rust module that contains the cross platform api.
 
