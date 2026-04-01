@@ -2,7 +2,7 @@
 
 This project is a modern template to develop Rust apps on the Numworks calculator. It has built-in support for Epsilon NWA apps, Upsilon-external apps and the Epsilon simulator. The codebase for the 3 targets is exactly the same and all the conditional compilation is done in the NADK api.
 
-## The most feature complete template for Numworks programming
+## One of the most feature complete template for Numworks programming
 
 NumworksAppsRust contains all the features from the Numworks' official EADK based Rust template and a lot of additional feature.
 
