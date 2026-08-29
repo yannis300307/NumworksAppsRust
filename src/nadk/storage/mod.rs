@@ -199,9 +199,9 @@ pub fn get_calculator_model() -> CalculatorModel {
     #[cfg(feature = "epsilon")]
     {
         match unsafe { extapp_calculatorModel() } {
-            _ => CalculatorModel::Unknown,
             1 => CalculatorModel::EpsilonN0110N0115,
             2 => CalculatorModel::EpsilonN0120,
+            _ => CalculatorModel::Unknown,
         }
     }
     #[cfg(target_os = "none")]
