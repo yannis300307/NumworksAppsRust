@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include <string.h>
 
-
 // Taken from https://codereview.stackexchange.com/questions/151049/endianness-conversion-in-c/151070#151070
 // I could convert the endianness manually, but it's less readable.
 inline uint32_t reverse32(uint32_t value) {
@@ -14,6 +13,28 @@ inline uint32_t reverse32(uint32_t value) {
           ((value & 0xFF000000) >> 24));
 }
 
+int strcmp(const char *s1, const char *s2)
+{
+  while (*s1 && (*s1 == *s2))
+  {
+    s1++;
+    s2++;
+  }
+  return *(const unsigned char *)s1 - *(const unsigned char *)s2;
+}
+
+char *
+strrchr(register const char *s, int c)
+{
+  char *rtnval = 0;
+
+  do
+  {
+    if (*s == c)
+      rtnval = (char *)s;
+  } while (*s++);
+  return (rtnval);
+}
 
 // This function takes extension for compatibility reasons, but ignores it
 int extapp_fileList(const char ** filename, int maxrecord, const char * extension) {
